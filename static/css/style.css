@@ -74,19 +74,16 @@ article a:hover {
 }
 
 .butSub {
-    float: right;
+    display: block;
+    margin: 0 auto;
+    margin-top: 6rem;
     width: 100px;
     height: 38px;
-    position: relative;
-    left: -39%;
     line-height: 24px;
-    top: 2em;;
-    margin: 9px 50px 15px 0;
     border-radius: 4px;
     font-size: 15px;
     color: #fff;
     background-color: #ea6f5a;
-    display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
     text-align: center;

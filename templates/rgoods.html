@@ -3,9 +3,10 @@
 <div class="meny-arrow"></div>
 <div class="contents">
     <div id="code"></div>
+
+    <button id="butSub" class="butSub">发送退货请求</button>
 </div>
 
-<button id="butSub" class="butSub">发送退货请求</button>
 
 <script src="/static/js/createMeny.js"></script>
 <script type="text/javascript">
@@ -14,16 +15,18 @@
     $(function () {
 
         $('.butSub').click(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '/push/',
-                    data: {data: '{{ data | safe }}'},
-                    success: function (result) {
-                        if (result) {
-                            $('#code').html('发送退货请求成功')
-                        }
-                    }
-                });
+            console.log('{{ data | safe }}')
+            $.ajax({
+                type: 'POST',
+                url: '/push/',
+                data: {data: '{{ data | safe }}'},
+                success: function (result) {
+                    $('#code').html('请求状态码为：' + result.errors + '<br>请求日志为:' + result.detail)
+                },
+                error: function () {
+                    $('#code').html('本地服务崩溃')
+                }
+            });
 
 
         })

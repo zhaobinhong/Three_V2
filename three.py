@@ -25,7 +25,7 @@ db = SQLAlchemy(app)
 appkey = 'appkey'
 
 # 验签地址
-VERIFY_GATEWAY = 'http://10.7.7.22:9090'
+VERIFY_GATEWAY = 'http://10.7.7.22:7000'
 
 
 # 注册用户表
@@ -121,8 +121,44 @@ def push():
     }
     # data = json.dumps(json.loads(request.data))
     # print data
-    resp = requests.post(url='http://10.7.7.22/api/passport/push/', json=request.form['data'])
-    return resp.content
+    resp = requests.post(url='http://10.7.7.190:8000/api/passport/push/', json=request.form['data'])
+    st_code = resp.status_code
+    if st_code==200:
+        return jsonify({
+                    "errors": 200,
+                    "detail": "请求成功"
+                })
+    elif st_code==301:
+        return jsonify({
+                    "errors": 301,
+                    "detail": "永久性重定向"
+                })
+    elif st_code==302:
+        return jsonify({
+                    "errors": 302,
+                    "detail": "临时性重定向"
+                })
+    elif st_code==304:
+        return jsonify({
+                    "errors": 304,
+                    "detail": "请求条件错误"
+                })
+    elif st_code==400:
+        return jsonify({
+                    "errors": 400,
+                    "detail": "报文语法错误"
+                })
+    elif st_code==500:
+        return jsonify({
+                    "errors": 500,
+                    "detail": "服务器错误"
+                })
+    else:
+        return jsonify({
+            "errors": st_code,
+            "detail": "未知错误"
+        })
+    # return resp.content
 
 
 def sum():
