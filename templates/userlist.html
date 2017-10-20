@@ -1,0 +1,64 @@
+{% include 'header.html' %}
+
+
+<div class="meny-arrow"></div>
+<div class="contents">
+
+    <div class="tab-content tabs-content-placeholder">
+
+
+        <div class="panel panel-default tab-pane tabs-up active tab-content-active" id="messages">
+            <table>
+                <tr>
+                    <th>用户ID</th>
+                    <th>用户名</th>
+                    <th>appkey</th>
+                    <th>reqID</th>
+                    <th>openid</th>
+                </tr>
+                <tbody id="goodslist">
+                <tr>
+                    <td>暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="/static/js/createMeny.js"></script>
+
+<!-- Messages Tab Ends -->
+
+<script type="text/javascript">
+    window.onload = function () {
+        var data = {{ data | safe }};
+        var a = [];
+        for (i in data) {
+            a.push(data[i]);
+        }
+        var list = document.getElementById("goodslist");
+        var str = '';
+        if (a == '') {
+            list.innerHTML = '暂无数据'
+        } else {
+            for (var i = 0; i < a.length; i++) {
+                str += '<tr>\
+                        <td>' + a[i].id + '</td>\
+                        <td>' + a[i].name + '</td>\
+                        <td>' + a[i].appkey + '</td>\
+                        <td>' + a[i].req_id + '</td>\
+                        <td>' + a[i].openid + '</td>\
+                       </tr>'
+            }
+            list.innerHTML = str
+        }
+
+    };
+
+
+</script>
+
+{% include 'footer.html' %}

@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+
+<div class="meny-arrow"></div>
+<div class="contents">
+    <div id="code"></div>
+</div>
+
+<button id="butSub" class="butSub">发送收货请求</button>
+
+<script src="/static/js/createMeny.js"></script>
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $('.butSub').click(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: '/push/',
+                data: {data: '{{ data | safe }}'},
+                success: function (result) {
+                    if (result) {
+                        $('#code').html('发送收货请求成功')
+                    }
+                }
+            });
+
+        })
+    });
+
+
+</script>
+
+
+{% include 'footer.html' %}

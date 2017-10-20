@@ -1,0 +1,35 @@
+{% include 'header.html' %}
+
+<div class="meny-arrow"></div>
+<div class="contents">
+    <div id="code"></div>
+</div>
+
+<script src="/static/js/createMeny.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        var data = '{{ data | safe }}';
+        $('#code').qrcode(data);
+    })
+
+    function quire() {
+        $.ajax({
+            url: "/services/login/{{ req_id }}/", async: false, success: function (result) {
+                console.log(result);
+                if (result['errors'] == 0 && result['status'] == 2) {
+                    $('#code').html('登录成功')
+                } else {
+                    $('#code').html('登录失败')
+                }
+
+
+            }
+        })
+    }
+
+    setInterval("quire()", 5000);
+</script>
+
+{% include 'footer.html' %}

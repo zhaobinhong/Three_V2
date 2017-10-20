@@ -1,0 +1,114 @@
+{% include 'header.html' %}
+
+<div class="meny-arrow"></div>
+<div class="contents">
+
+    <div class="tab-content tabs-content-placeholder">
+
+
+        <div class="panel panel-default tab-pane tabs-up active tab-content-active" id="messages">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>订单号</th>
+                    <th>付款人</th>
+                    <th>地址</th>
+                    <th>商品名称</th>
+                    <th>商品价格</th>
+                    <th>手机号</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                <tbody id="goodslist">
+                <tr>
+                    <td>暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <script src="/static/js/createMeny.js"></script>
+
+    <!-- Messages Tab Ends -->
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var data = {{ data | safe }};
+            var a = [];
+            for (i in data) {
+                a.push(data[i]);
+            }
+            var list = document.getElementById("goodslist");
+            var str = '';
+            if (a == '') {
+                list.innerHTML = '暂无数据'
+            } else {
+                for (var i = 0; i < a.length; i++) {
+                    var status = "", h = "";
+                    if (a[i].g_type == "待支付") {
+                        status = "发送支付请求";
+                        h = '/api/passport/payment/';
+                    } else if (a[i].g_type == "已支付") {
+                        status = "发送收货请求";
+                        h = '/api/passport/receive/';
+                    } else if (a[i].g_type == "已收货") {
+                        status = "发送退货请求";
+                        h = '/api/passport/refunds/';
+                    } else if (a[i].g_type == "未收货") {
+                        status = "发送收货请求";
+                        h = '/api/passport/receive/';
+                    } else {
+                        status = "发送支付请求";
+                        h = '/api/passport/receive/';
+                    }
+                    str += '<tr class="click">\
+                        <td>' + a[i].id + '</td>\
+                        <td>' + a[i].order_num + '</td>\
+                        <td>' + a[i].drawee + '</td>\
+                        <td>' + a[i].address + '</td>\
+                        <td>' + a[i].g_name + '</td>\
+                        <td>' + a[i].g_price + '</td>\
+                        <td>' + a[i].mobile + '</td>\
+                        <td>' + a[i].g_type + '</td>\
+                        <td>' + '<button class="butSubmit">' + status + '</button>' + '</td>\
+                       </tr>'
+                }
+                list.innerHTML = str
+            }
+
+            $('.click').click(function () {
+                var hLink = this.getElementsByClassName('butSubmit')[0].innerHTML;
+                var h = "";
+                if (hLink == '发送支付请求') {
+                    h = '/api/passport/payment/';
+                } else if (hLink == '发送收货请求') {
+                    h = '/api/passport/receive/';
+                } else if (hLink == '发送退货请求') {
+                    h = '/api/passport/refunds/';
+                }
+                window.location.href = h
+            });
+
+            $('.butSub').click(function () {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/push/',
+                    data: {data: '{{ data | safe }}'},
+                    success: function (result) {
+                        if (result) {
+                            alert('推送已发送');
+                        }
+                    }
+                });
+
+            })
+        };
+
+
+    </script>
+
+    {% include 'footer.html' %}

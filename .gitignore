@@ -1,0 +1,11 @@
+
+*.db
+*~
+.*
+
+
+!.gitignore
+migrations
+
+*.pyc
+

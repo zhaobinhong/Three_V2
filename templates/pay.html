@@ -1,0 +1,47 @@
+{% include 'header.html' %}
+
+
+<div class="meny-arrow"></div>
+<div class="contents">
+    <div id="code"></div>
+</div>
+
+
+<button id="butSub" class="butSub">发送支付请求</button>
+
+<script src="/static/js/createMeny.js"></script>
+
+<script type="text/javascript" charset="UTF-8">
+
+
+    $(function () {
+
+        var data = '{{ data| safe  }}';
+        da = eval("'" + data + "'");
+        console.log(da)
+
+        $('#code').qrcode(da);
+
+
+        $('.butSub').click(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: '/push/',
+                data: {data: da},
+                success: function (result) {
+                    if (result) {
+                        $('#code').html('支付已推送')
+                    }
+                }
+            });
+
+        })
+
+    });
+
+
+</script>
+
+
+{% include 'footer.html' %}
