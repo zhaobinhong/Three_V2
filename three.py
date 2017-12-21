@@ -218,7 +218,7 @@ def get_app(action):
                 except Exception as e:
                     return jsonify({
                         "errors": 1,
-                        "detail": "数据写入失败" + e.message
+                        "detail": "用户未注册" + e.message
                     })
 
             else:

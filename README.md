@@ -1,5 +1,5 @@
 ## 第三方登录（demo）
-用Python2.7 、flask框架 写的第三方登录平台
+用Python2.7 、flask框架 写的第三方扫码 登录、注册平台
 
 结构如下：
 
@@ -84,3 +84,7 @@ $ python manage.py runserver --port=8888
 $ python manage.py runserver --debug --port=8888
 
 ```
+
+# 示例：
+
+![首页](http://upload-images.jianshu.io/upload_images/1248565-95bd74dd8f96a451.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

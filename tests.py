@@ -19,7 +19,7 @@ PAYMENTDATA = '{"data": { "errors": 0, "detail": "支付成功","appkey": "appke
 RECEIVEDATA = '{"data": {"appkey": "appkey", "uri": "/api/passport/receive/", "req_id": "'+req_id+'","openid": "'+req_id+'"}, "type": "receive"}'
 REFUNDSDATA = '{"data": {"appkey": "appkey", "uri": "/api/passport/refunds/", "req_id": "'+req_id+'","openid": "'+req_id+'"}, "type": "refunds"}'
 
-VERIFY = 'http://10.7.7.22:9090'
+VERIFY = 'http://10.7.7.22:7000'
 
 
 class FlaskrTestCase(unittest.TestCase):
